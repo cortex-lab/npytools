@@ -1,0 +1,7 @@
+site_name: npytools
+pages:
+- Getting started:
+  - Introduction: 'index.md'
+- User guide:
+- Developer guide:
+theme: readthedocs
