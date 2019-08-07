@@ -28,7 +28,7 @@ def _sizeof(num, suffix=''):
 def _tabulate(table):
     a = max(len(str(x)) for x, _ in table)
     b = max(len(str(x)) for _, x in table)
-    header = '+%s|%s+' % ('-' * (a + 2), '-' * (b + 2))
+    header = '+%s+%s+' % ('-' * (a + 2), '-' * (b + 2))
     table_str = [
         ('| {0: <' + str(a) + '} | {1: <' + str(b) + '} |').format(name, str(value))
         for name, value in table]
