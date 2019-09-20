@@ -33,9 +33,9 @@ npytools is a minimal Python library that provides such tools.
 
 ### Installation
 
-Dependencies : Python 3, NumPy.
+Dependencies : Python 3, NumPy, click (which can be installed with `pip install click`).
 
-To install: `pip install git+https://github.com/cortex-lab/npytools.git`
+To install npytools: `pip install git+https://github.com/cortex-lab/npytools.git`
 
 
 ### npyshow
@@ -70,4 +70,13 @@ $ npyshow myarray.npy --show-stats
   ...
   [ 0.      0.     ...  0.      0.    ]
   [ 0.      0.     ...  0.      0.    ]]]
+```
+
+
+### Running npyshow on multiple files (Unix)
+
+To quickly call `npyshow` on all `_ibl_*.npy` file, call:
+
+```
+ls -1 _ibl_*.npy | xargs -l npyshow
 ```
