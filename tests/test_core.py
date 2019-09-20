@@ -22,7 +22,7 @@ def test_sizeof():
 
 def test_array_info_table():
     arr = np.random.rand(10, 10)
-    table = _array_info_table(arr)
+    table = _array_info_table(arr, show_stats=True)
     assert table
 
 
