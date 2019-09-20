@@ -76,6 +76,7 @@ def npyshow(ctx, path, show_array=True, n=2, show_stats=False):
     np.set_printoptions(edgeitems=n)
     arr = np.load(path, mmap_mode='r')
     table = _array_info_table(arr, show_stats=show_stats)
+    click.echo(path)
     click.echo(_tabulate(table))
     if show_array:
         click.echo(arr)
