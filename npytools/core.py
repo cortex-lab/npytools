@@ -63,7 +63,7 @@ def _array_info_table(arr, show_stats=False):
 #------------------------------------------------------------------------------
 
 @click.command('npyshow')
-@click.argument('path', type=click.Path(exists=True))
+@click.argument('paths', type=click.Path(exists=True), nargs=-1)
 @click.option('-n', default=2, help="Number of first/last elements to show.")
 @click.option('--show-array/--no-show-array', default=True, help="Whether to show the array.")
 @click.option(
@@ -71,12 +71,16 @@ def _array_info_table(arr, show_stats=False):
     help="Whether to show basic statistics about the array "
     "(requires to load the entire array in memory)")
 @click.pass_context
-def npyshow(ctx, path, show_array=True, n=2, show_stats=False):
+def npyshow(ctx, paths, show_array=True, n=2, show_stats=False):
     """Show array information of a NPY file and possibly display it."""
     np.set_printoptions(edgeitems=n)
-    arr = np.load(path, mmap_mode='r')
-    table = _array_info_table(arr, show_stats=show_stats)
-    click.echo(path)
-    click.echo(_tabulate(table))
-    if show_array:
-        click.echo(arr)
+    for path in paths:
+        if not path.endswith('.npy'):
+            continue
+        arr = np.load(path, mmap_mode='r')
+        table = _array_info_table(arr, show_stats=show_stats)
+        click.echo(path)
+        click.echo(_tabulate(table))
+        if show_array:
+            click.echo(arr)
+        arr._mmap.close()
