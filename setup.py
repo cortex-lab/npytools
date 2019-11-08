@@ -47,7 +47,7 @@ setup(
     entry_points={
         'console_scripts': [
             'npyshow = npytools:npyshow',
-            # 'npyplot = npytools:npyplot',
+            'npyplot = npytools:npyplot',
         ],
     },
     include_package_data=True,

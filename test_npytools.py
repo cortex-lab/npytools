@@ -9,7 +9,7 @@
 
 import numpy as np
 
-from npytools.core import _sizeof, _array_info_table, _tabulate
+from npytools import _sizeof, _array_info_table, _tabulate
 
 
 #------------------------------------------------------------------------------

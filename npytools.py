@@ -7,17 +7,14 @@
 # Imports
 #------------------------------------------------------------------------------
 
-import click
-import numpy as np
 import atexit
 import logging
 import os
-import os.path as op
 from pathlib import Path
 import subprocess
-import sys
 
-from io import StringIO
+import click
+import numpy as np
 
 np.set_printoptions(precision=4, suppress=True, edgeitems=2, threshold=50)
 
@@ -130,3 +127,33 @@ def npyshow(ctx, paths, show_array=True, n=2, show_stats=False):
         if show_array:
             click.echo(arr)
         arr._mmap.close()
+
+
+@click.command('npyplot')
+@click.argument('path', type=click.Path(exists=True), nargs=1)
+@click.pass_context
+def npyplot(ctx, path):
+    import matplotlib as mpl
+    import matplotlib.pyplot as plt
+
+    plt.style.use('dark_background')
+    mpl.rcParams['toolbar'] = 'None'
+
+    f, ax = plt.subplots()
+    arr = np.load(path).squeeze()
+    if arr.ndim == 1:
+        ax.plot(arr)
+    elif arr.ndim == 2:
+        m, M = min(arr.shape), max(arr.shape)
+        arr = arr.reshape((M, m))
+        if m == 2:
+            ax.plot(arr[:, 0], arr[:, 1])
+        if 3 <= m <= 5:
+            ax.plot(arr)
+        else:
+            ax.imshow(arr)
+    elif arr.ndim == 3:
+        arr = np.transpose(arr, np.argsort(arr.shape)[::-1])
+        ax.imshow(arr[..., :3].astype(np.float64), vmin=arr.min(), vmax=arr.max())
+    f.canvas.window().statusBar().setVisible(False)
+    plt.show()
