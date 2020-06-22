@@ -89,13 +89,15 @@ def _array_info_table(arr, show_stats=False):
     ]
     if show_stats:
         zero = size - np.count_nonzero(arr)
+        nan = np.isnan(arr).sum()
+        nonnan = arr[~np.isnan(arr)]
         table += [
-            ('min', arr.min()),
-            ('mean', arr.mean()),
-            ('median', np.median(arr)),
-            ('max', arr.max()),
+            ('min', '%.3e' % nonnan.min()),
+            ('mean', '%.3e' % nonnan.mean()),
+            ('median', '%.3e' % np.median(nonnan)),
+            ('max', '%.3e' % nonnan.max()),
             ('zero', '%d (%d%%)' % (zero, 100 * float(zero) / size)),
-            ('nan', np.isnan(arr).sum()),
+            ('nan', '%d (%d%%)' % (nan, 100 * float(nan) / size)),
             ('inf', np.isinf(arr).sum()),
         ]
     return table
